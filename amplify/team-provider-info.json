@@ -1,0 +1,44 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-healintranet-dev-7cb53-authRole",
+      "UnauthRoleArn": "arn:aws:iam::156041407967:role/amplify-healintranet-dev-7cb53-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::156041407967:role/amplify-healintranet-dev-7cb53-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-healintranet-dev-7cb53-deployment",
+      "UnauthRoleName": "amplify-healintranet-dev-7cb53-unauthRole",
+      "StackName": "amplify-healintranet-dev-7cb53",
+      "StackId": "arn:aws:cloudformation:us-east-1:156041407967:stack/amplify-healintranet-dev-7cb53/9cef90a0-2d1e-11f0-ac23-0e34431d21e9",
+      "AmplifyAppId": "dw58htoptjchc",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-healintranet-dev-7cb53-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "healintranet6ddde7c16ddde7c1": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "healintranet6ddde7c16ddde7c1DefineAuthChallenge": {
+          "deploymentBucketName": "amplify-healintranet-dev-7cb53-deployment",
+          "s3Key": "amplify-builds/healintranet6ddde7c16ddde7c1DefineAuthChallenge-675531332b6933527041-build.zip"
+        },
+        "healintranet6ddde7c16ddde7c1CreateAuthChallenge": {
+          "deploymentBucketName": "amplify-healintranet-dev-7cb53-deployment",
+          "s3Key": "amplify-builds/healintranet6ddde7c16ddde7c1CreateAuthChallenge-313859424e3343426d73-build.zip"
+        },
+        "healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse": {
+          "RECAPTCHASECRET": "",
+          "deploymentBucketName": "amplify-healintranet-dev-7cb53-deployment",
+          "s3Key": "amplify-builds/healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse-672b37424a33696a374d-build.zip"
+        },
+        "AdminQueries251f0e0b": {
+          "deploymentBucketName": "amplify-healintranet-dev-7cb53-deployment",
+          "s3Key": "amplify-builds/AdminQueries251f0e0b-63366a6f56634b463249-build.zip"
+        }
+      },
+      "api": {
+        "AdminQueries": {}
+      }
+    }
+  }
+}

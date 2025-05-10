@@ -2,21 +2,66 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-
-const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Companies', href: '/companies' },
-  { name: 'Dashboard', href: '/dashboard' },
-  { name: 'Resources', href: '/resources' },
-  { name: 'WISE Program', href: '/wise' },
-  { name: 'Benefits', href: '/benefits' },
-  { name: 'Flash Reports', href: '/flash-reports' },
-];
+import { signOut } from 'aws-amplify/auth';
+import { useRouter, usePathname } from 'next/navigation';
+import { checkAuthState } from '@/utils/auth';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const baseNavigation = [
+    { name: 'Home', href: '/' },
+    { name: 'Companies', href: '/companies' },
+    { name: 'Dashboard', href: '/dashboard' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'WISE Program', href: '/wise' },
+    { name: 'Benefits', href: '/benefits' },
+  ];
+
+  const navigation = isAuthenticated
+    ? [...baseNavigation, { name: 'Flash Reports', href: '/flash-reports' }]
+    : baseNavigation;
+
+  async function updateAuthState() {
+    setLoading(true);
+    try {
+      const state = await checkAuthState();
+      console.log('[Header] Auth state updated:', state);
+
+      setUser(state.user);
+      setIsAuthenticated(state.isAuthenticated);
+    } catch (error) {
+      console.error('Auth check error:', error);
+      setUser(null);
+      setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    updateAuthState();
+  }, [pathname]);
+
+  async function handleSignOut() {
+    try {
+      console.log("Signing out...");
+      await signOut({ global: true });
+      setUser(null);
+      setIsAuthenticated(false);
+      console.log("Successfully signed out, redirecting to home");
+      router.push('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  }
 
   return (
     <header className="bg-white shadow-sm">
@@ -54,16 +99,31 @@ export default function Header() {
             </Link>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            href="/dashboard"
-            className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            Get Started
-          </Link>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center">
+          {!loading && (
+            isAuthenticated ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm font-semibold text-gray-900">
+                  
+                </span>
+                <button
+                  onClick={handleSignOut}
+                  className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              >
+                Sign In
+              </Link>
+            )
+          )}
         </div>
       </nav>
-      {/* Mobile menu */}
       <div className={`lg:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}>
         <div className="fixed inset-0 z-10" />
         <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
@@ -95,18 +155,39 @@ export default function Header() {
                     key={item.name}
                     href={item.href}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
                 ))}
               </div>
               <div className="py-6">
-                <Link
-                  href="/dashboard"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Get Started
-                </Link>
+                {!loading && (
+                  isAuthenticated ? (
+                    <div className="space-y-3">
+                      <div className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900">
+                        Hello, {user?.username || 'User'}
+                      </div>
+                      <button
+                        onClick={() => {
+                          handleSignOut();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-blue-600 hover:bg-gray-50"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-blue-600 hover:bg-gray-50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Sign In
+                    </Link>
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -114,4 +195,4 @@ export default function Header() {
       </div>
     </header>
   );
-} 
+}

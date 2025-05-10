@@ -1,0 +1,203 @@
+{
+  "api": {
+    "AdminQueries": {
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "healintranet6ddde7c16ddde7c1"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "AdminQueries251f0e0b"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "auth": {
+    "healintranet6ddde7c16ddde7c1": {
+      "customAuth": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1DefineAuthChallenge",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1CreateAuthChallenge",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse",
+          "triggerProvider": "Cognito"
+        }
+      ],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OPTIONAL",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "healintranet6ddde7c16ddde7c1"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
+    }
+  },
+  "function": {
+    "AdminQueries251f0e0b": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "healintranet6ddde7c16ddde7c1"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "healintranet6ddde7c16ddde7c1CreateAuthChallenge": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "healintranet6ddde7c16ddde7c1DefineAuthChallenge": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_AdminQueries251f0e0b_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries251f0e0b"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueries251f0e0b_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries251f0e0b"
+        }
+      ]
+    },
+    "AMPLIFY_function_healintranet6ddde7c16ddde7c1CreateAuthChallenge_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1CreateAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_healintranet6ddde7c16ddde7c1CreateAuthChallenge_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1CreateAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_healintranet6ddde7c16ddde7c1DefineAuthChallenge_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1DefineAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_healintranet6ddde7c16ddde7c1DefineAuthChallenge_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1DefineAuthChallenge"
+        }
+      ]
+    },
+    "AMPLIFY_function_healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse_RECAPTCHASECRET": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse"
+        }
+      ]
+    },
+    "AMPLIFY_function_healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse"
+        }
+      ]
+    },
+    "AMPLIFY_function_healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "healintranet6ddde7c16ddde7c1VerifyAuthChallengeResponse"
+        }
+      ]
+    }
+  }
+}

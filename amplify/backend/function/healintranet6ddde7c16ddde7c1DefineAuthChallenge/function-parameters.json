@@ -1,0 +1,16 @@
+{
+  "trigger": true,
+  "modules": [
+    "captcha-define-challenge"
+  ],
+  "parentResource": "healintranet6ddde7c16ddde7c1",
+  "functionName": "healintranet6ddde7c16ddde7c1DefineAuthChallenge",
+  "resourceName": "healintranet6ddde7c16ddde7c1DefineAuthChallenge",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "/snapshot/amplify-cli/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/DefineAuthChallenge",
+  "triggerTemplate": "DefineAuthChallenge.json.ejs",
+  "triggerEventPath": "DefineAuthChallenge.event.json",
+  "roleName": "healintranet6ddde7c16ddde7c1DefineAuthChallenge",
+  "skipEdit": true
+}

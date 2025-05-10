@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import {
   DocumentTextIcon,
@@ -19,7 +21,7 @@ const dashboardItems = [
     color: 'bg-blue-500',
   },
   {
-    name: 'Mike\'s Videos',
+    name: "Mike's Videos",
     description: 'Watch training and informational videos',
     href: '/videos',
     icon: VideoCameraIcon,
@@ -106,4 +108,4 @@ export default function Dashboard() {
       </div>
     </div>
   );
-} 
+}
